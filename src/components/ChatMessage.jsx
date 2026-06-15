@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 function ChatMessage({ message }) {
   const isUser = message.role === 'user';
@@ -20,8 +21,8 @@ function ChatMessage({ message }) {
           {isUser ? (
             <p className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</p>
           ) : (
-            <div className="prose prose-sm max-w-none">
-              <ReactMarkdown>{message.content}</ReactMarkdown>
+            <div className="prose prose-sm max-w-none prose-table:table-auto prose-th:border prose-th:border-line prose-th:bg-surface prose-th:px-4 prose-th:py-2 prose-td:border prose-td:border-line prose-td:px-4 prose-td:py-2">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
             </div>
           )}
 
