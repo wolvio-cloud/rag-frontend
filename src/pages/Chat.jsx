@@ -41,6 +41,7 @@ function Chat() {
         role: 'assistant',
         content: response.answer,
         sources: response.sources || [],
+        followup_questions: response.followup_questions || [],
       });
     } catch (err) {
       setError(err.response?.data?.detail || 'Failed to get a response.');
@@ -90,7 +91,7 @@ function Chat() {
           ) : (
             <>
               {messages.map((message) => (
-                <ChatMessage key={message.id} message={message} />
+                <ChatMessage key={message.id} message={message} onFollowupClick={(q) => handleSubmit(null, q)} />
               ))}
               {loading && <ChatThinking />}
               <div ref={messagesEndRef} />

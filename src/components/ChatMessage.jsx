@@ -1,7 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
-function ChatMessage({ message }) {
+function ChatMessage({ message, onFollowupClick }) {
   const isUser = message.role === 'user';
 
   return (
@@ -37,6 +37,23 @@ function ChatMessage({ message }) {
                   </li>
                 ))}
               </ul>
+            </div>
+          )}
+
+          {!isUser && message.followup_questions?.length > 0 && (
+            <div className="mt-4 border-t border-line pt-3">
+              <p className="mb-2 text-xs font-medium uppercase tracking-wider text-ink-muted">Follow-up Questions</p>
+              <div className="flex flex-wrap gap-2">
+                {message.followup_questions.map((q, index) => (
+                  <button
+                    key={index}
+                    onClick={() => onFollowupClick && onFollowupClick(q)}
+                    className="rounded-full border border-line bg-surface px-3 py-1.5 text-xs text-ink-secondary transition hover:border-zinc-300 hover:text-ink text-left"
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
